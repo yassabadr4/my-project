@@ -85,7 +85,7 @@ dependencies:
   purchases_flutter: ^6.30.0
 
   # Agora
-  agora_rtc_engine: ^5.2.0
+  # agora_rtc_engine: ^5.2.0
   permission_handler: ^11.3.1
 
   flutter_localizations:

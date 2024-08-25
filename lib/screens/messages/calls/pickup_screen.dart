@@ -31,7 +31,8 @@ class _PickUpScreenState extends State<PickUpScreen> {
     await callService.endCall(callModel: widget.callModel!);
 
     if (appStore.isWebsocketEnable && messageStore.webSocketReady) {
-      String message = '42["${SocketEvents.mediaEvent}",{"event":"${SocketEvents.rejected}","to":${widget.callModel!.callerId},"thread_id":${widget.callModel!.threadId}}]';
+      String message =
+          '42["${SocketEvents.mediaEvent}",{"event":"${SocketEvents.rejected}","to":${widget.callModel!.callerId},"thread_id":${widget.callModel!.threadId}}]';
       log('Send Message: $message');
 
       channel?.sink.add(message);
@@ -95,9 +96,12 @@ class _PickUpScreenState extends State<PickUpScreen> {
                   6.width,
                   RawMaterialButton(
                     onPressed: () async {
-                      if (appStore.isWebsocketEnable && messageStore.webSocketReady) {
-                        String messageOne = '42["${SocketEvents.mediaEvent}",{"event":"${SocketEvents.answered}","thread_id":${widget.callModel!.threadId},"to":${widget.callModel!.callerId}}]';
-                        String messageTwo = '42["${SocketEvents.mediaEvent}",{"event":"${SocketEvents.selfReject}","thread_id":${widget.callModel!.threadId},"to":${userStore.loginUserId}}]';
+                      if (appStore.isWebsocketEnable &&
+                          messageStore.webSocketReady) {
+                        String messageOne =
+                            '42["${SocketEvents.mediaEvent}",{"event":"${SocketEvents.answered}","thread_id":${widget.callModel!.threadId},"to":${widget.callModel!.callerId}}]';
+                        String messageTwo =
+                            '42["${SocketEvents.mediaEvent}",{"event":"${SocketEvents.selfReject}","thread_id":${widget.callModel!.threadId},"to":${userStore.loginUserId}}]';
 
                         log('Send Message: $messageOne');
                         log('Send Message: $messageTwo');
@@ -106,19 +110,19 @@ class _PickUpScreenState extends State<PickUpScreen> {
                         channel?.sink.add(messageTwo);
                       }
 
-                      if (isAndroid) {
-                        if (await Permissions.cameraAndMicrophonePermissionsGranted()) {
-                          isPickUpScreenLaunched = false;
-                          AgoraVideoCallScreen(callModel: widget.callModel!).launch(context).then((value) {
-                            finish(context);
-                          });
-                        }
-                      } else {
-                        isPickUpScreenLaunched = false;
-                        AgoraVideoCallScreen(callModel: widget.callModel!).launch(context).then((value) {
-                          finish(context);
-                        });
-                      }
+                      // if (isAndroid) {
+                      //   if (await Permissions.cameraAndMicrophonePermissionsGranted()) {
+                      //     isPickUpScreenLaunched = false;
+                      //     AgoraVideoCallScreen(callModel: widget.callModel!).launch(context).then((value) {
+                      //       finish(context);
+                      //     });
+                      //   }
+                      // } else {
+                      //   isPickUpScreenLaunched = false;
+                      //   AgoraVideoCallScreen(callModel: widget.callModel!).launch(context).then((value) {
+                      //     finish(context);
+                      //   });
+                      // }
                     },
                     child: Icon(Icons.call, color: Colors.green),
                     shape: CircleBorder(),

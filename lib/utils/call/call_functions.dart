@@ -32,7 +32,7 @@ class CallFunctions {
     callModel.hasDialed = true;
     if (callMade) {
       appStore.setLoading(false);
-      AgoraVideoCallScreen(callModel: callModel, isReceiver: false).launch(context);
+      // AgoraVideoCallScreen(callModel: callModel, isReceiver: false).launch(context);
     }
   }
 }

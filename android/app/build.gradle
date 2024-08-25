@@ -1,77 +1,88 @@
+// plugins {
+//     id "com.android.application"
+//     id "kotlin-android"
+//     id "dev.flutter.flutter-gradle-plugin"
+//     id "com.google.gms.google-services"
+//     id "com.google.firebase.crashlytics"
+//     id 'org.jetbrains.kotlin.android'
+// }
+
+// def localProperties = new Properties()
+// def localPropertiesFile = rootProject.file('local.properties')
+// def billing_version = "7.0.0"
+// if (localPropertiesFile.exists()) {
+//     localPropertiesFile.withReader('UTF-8') { reader ->
+//         localProperties.load(reader)
+//     }
+// }
+
+// def keystoreProperties = new Properties()
+// def keystorePropertiesFile = rootProject.file('key.properties')
+// if (keystorePropertiesFile.exists()) {
+//     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+// }
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
-    id "com.google.gms.google-services"
-    id "com.google.firebase.crashlytics"
-    id 'org.jetbrains.kotlin.android'
 }
 
 def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-def billing_version = "7.0.0"
+def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
+    localPropertiesFile.withReader("UTF-8") { reader ->
         localProperties.load(reader)
     }
 }
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+if (flutterVersionCode == null) {
+    flutterVersionCode = "1"
 }
 
+def flutterVersionName = localProperties.getProperty("flutter.versionName")
+if (flutterVersionName == null) {
+    flutterVersionName = "1.0"
+}
+
+
+
 android {
+    namespace = "com.iconic.socialv"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion "25.1.8937393"
     compileSdkVersion 34
 
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        applicationId "com.iconic.socialv"
-        minSdkVersion 24
-        targetSdkVersion 34
-        versionCode 46
-        versionName '8.0.0'
+        applicationId = "com.iconic.socialv"
+        minSdk = 24
+        minSdkVersion 23
+        targetSdk = 34
+        //46
+        versionCode = flutterVersionCode.toInteger()
+        //'8.0.0'
+        versionName = flutterVersionName
         multiDexEnabled true
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-    }
-
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
-        }
-    }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.debug
         }
     }
 }
+
+
 
 flutter {
     source '../..'
@@ -85,15 +96,15 @@ configurations.all {
 }
 
 
-dependencies {
-    implementation "com.android.billingclient:billing:$billing_version"
-    implementation 'com.google.android.gms:play-services-wallet:19.3.0'
-    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-messaging")
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.android.material:material:1.5.0'
+// dependencies {
+//     implementation "com.android.billingclient:billing:$billing_version"
+//     implementation 'com.google.android.gms:play-services-wallet:19.3.0'
+//     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+//     // When using the BoM, you don't specify versions in Firebase library dependencies
+//     implementation("com.google.firebase:firebase-messaging")
+//     implementation 'com.google.firebase:firebase-analytics'
+//     implementation 'com.google.android.material:material:1.5.0'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    // other dependencies
-}
+//     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//     // other dependencies
+// }
